@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+<!--        用于解决闪动问题-->
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div v-cloak="">{{message}}</div>
+<!--    v-text没有闪动问题-->
+    <div v-text="message"></div>
+    <div v-text="h1"></div>
+<!--    直接引用html容易导致攻击-->
+    <div v-html="h1"></div>
+<!--    显示原始信息，跳过编译-->
+    <div v-pre>{{message}}</div>
+<!--    只编译一次就不再具有响应式的功能了-->
+    <div v-once>{{message}}</div>
+    {{1 + 20}}
+    {{message + 123}}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            message:'Hello,你好！',
+            h1:'<h1>我是h1</h1>'
+        }
+    })
+</script>
+</body>
+</html>

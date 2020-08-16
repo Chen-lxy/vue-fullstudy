@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+<!--    将字符串自动装换成数字-->
+    <div>
+        num1: <input type="text" v-model.number="num1">
+    </div>
+    <div>
+        num2: <input type="text" v-model.number="num2">
+    </div>
+    <div>
+        <button @click="handle">计算</button>
+    </div>
+    <div>
+        result: <span>{{result}}</span>
+    </div>
+<!--去掉头尾的空格-->
+    <input type="text" v-model.trim="text">
+<!--    延迟功能，事件发生在input款失去焦点，默认是发生在内容变化，可用于用户注册时用户名的可用情况-->
+    <input type="text" v-model.lazy="uname">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                num1:'',
+                num2:'',
+                result:'',
+                text:' aaa ',
+                uname:''
+            },
+            methods:{
+                handle:function(){
+                    this.result = this.num1 + this.num2;
+                }
+            }
+        })
+</script>
+</body>
+</html>

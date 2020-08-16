@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <div>
+      用户名：
+      <input type="text" v-model.lazy="uname">
+      <span>{{tip}}</span>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            uname:'',
+            tip:''
+        },
+        methods:{
+            checkUname:function(name){
+                // 由于在下面的函数中this指代的是window,这里用that缓存下VUE这个this对象
+                var that = this;
+                // setTimeout是一个函数
+                setTimeout(function(){
+                    if(name == 'admin'){
+                        that.tip = '用户名已存在，请重新输入';
+                    }else{
+                        that.tip = '成功';
+                    }
+                },2000)
+            }
+        },
+        // 监听输入的变化
+        watch:{
+            uname:function(val){
+                // 处理uname变化后的逻辑
+                this.checkUname(val);
+                this.tip = '正在验证..........'
+            }
+        }
+    })
+</script>
+</body>
+</html>

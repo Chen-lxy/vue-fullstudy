@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div @click="handle1">
+<!--       阻止时间冒泡-->
+        <button @click.stop="handle2">点我</button>
+<!--       阻止默认行为-->
+        <a href="www.baidu.com" @click.prevent>baidu</a>
+        <button @on:keyup.enter="handle3">回车</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            message:'Hello,你好！'
+        },
+        methods:{
+            handle1:function(){
+                alert('我是父类事件')
+            },
+            handle2:function(event){
+                alert('我是子类事件')
+                // 传统 的方式阻止事件冒泡
+                // event.stopPropagation();
+            },
+            handle3:function(){
+                alert('我是回车键的按键函数')
+            }
+        }
+    })
+</script>
+</body>
+</html>

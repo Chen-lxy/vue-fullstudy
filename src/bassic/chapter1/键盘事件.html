@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        <form action="">
+<!--            键盘按键事件-->
+            <p><input type="text" v-model="uname" v-on:keyup.delete="clear"></p>
+            <p><input type="text" v-model="pwd" v-on:keyup.enter="submiteJob"></p>
+            <p><input type="submit" name="submit" value="提交" v-on:click="submiteJob"></p>
+        </form>
+        <input type="text" v-on:keyup="test">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    // 自定义按键名：名字自定义，值是通过event.keyCode获取的固定值
+    Vue.config.keyCodes.a=65;
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            uname:'',
+            pwd:''
+        },
+        methods:{
+            submiteJob:function(){
+                console.log(this.uname);
+                console.log(this.pwd);
+            },
+            clear:function(){
+                this.uname='';
+            },
+            test:function(event){
+                // 获取按键对应的值
+                console.log(event.keyCode)
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .fix::after{
+            content: "";
+            clear: both;
+            display: block;
+        }
+        #app #optionCard ul li{
+            float: left;
+            width: 100px;
+            height: 40px;
+            list-style: none;
+            border: 1px solid red;
+            text-align: center;
+            line-height: 40px;
+        }
+        #picture{
+            border:1px solid;
+            width: 300px;
+            height: 300px;
+        }
+        .optionActive{
+            background: orange;
+        }
+        .current{
+            display: block;
+        }
+        .notcurrent{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="optionCard">
+        <ul class="fix">
+            <li @click="change(index)" :key="item.id" v-for="(item,index) in items" :class="currentIndex==index? 'optionActive':''">{{item.title}}</li>
+        </ul>
+        <div id="picture" :key="item.id" v-for="(item,index) in items" :class="currentIndex==index? 'current':'notcurrent'">
+            <img :src="item.path" style="width: 300px;height: 300px" >
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            currentIndex:2,
+            items:[
+                {
+                    id:1,
+                    title:'apple',
+                    path:'./img/apple.jfif'
+                },{
+                    id:2,
+                    title:'orange',
+                    path:'./img/orange.jfif'
+                },{
+                    id:3,
+                    title:'banana',
+                    path:'./img/balana.jpg'
+                }
+            ]
+
+        },
+        methods:{
+            change:function(index){
+                this.currentIndex = index;
+            }
+        }
+    })
+</script>
+</body>
+</html>

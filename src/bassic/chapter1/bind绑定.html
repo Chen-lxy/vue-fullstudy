@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .active{
+            border:1px solid red;
+            width: 100px;
+            height: 100px;
+        }
+        .error{
+            backgroud:orange;
+        }
+        .test{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<!--样式动态处理-->
+<div id="app">
+    <div v-bind:class="{active:isActive,error:isError}">
+
+    </div>
+    <button @click="toggle">切换</button>
+    <div v-bind:class="[activeClass,errorClass,{test:isTest}]">
+        这是测试样式
+    </div>
+    <button @click="toggle2">切换</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            isActive:true,
+            isError:true,
+            activeClass:'active',
+            errorClass:'error',
+            isTest:true
+        },
+        methods:{
+            toggle:function(){
+                this.isActive = !this.isActive;
+                this.isError = !this.isError;
+            },
+            toggle2:function(){
+                this.activeClass = '';
+            }
+        }
+    })
+</script>
+</body>
+</html>

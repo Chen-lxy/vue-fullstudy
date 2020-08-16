@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <span>{{date | format('yyyy-MM-dd')}}</span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+<!--    利用过滤器，格式化时间-->
+    Vue.filter('format',function(value,args){
+        var val = '';
+        if (args == 'yyyy-MM-dd'){
+            val += value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDay();
+        }
+        return val;
+    })
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            date:new Date()
+        },
+        methods:{
+
+        }
+    })
+</script>
+</body>
+</html>

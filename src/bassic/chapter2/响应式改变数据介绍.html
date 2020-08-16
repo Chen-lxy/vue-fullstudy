@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        <li v-for="item in list">{{item}}</li>
+    </div>
+    <div>
+        <span>{{student.name}}</span>
+        <span>{{student.gender}}</span>
+        <span>{{student.age}}</span>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            list:['python','java','c++'],
+            student:{
+                name:'zhangshan',
+                gender:'man'
+            }
+        },
+        methods:{
+
+        }
+    });
+    // vue.list[0] = 'test'; 通过这种方式改变的数据不是响应式的（即页面不会变化，但是通过控制台获取的会改变）
+    // Vue.set(vue.list,0,'test'); 通过这种方式改变数据是响应式的，会响应到页面中，适用于数组，对象。。。
+    vue.$set(vue.list,0,'test'); // 也是响应式的
+   // vue.student.age = 10; // 通过这种方式添加的属性不是响应式的，在控制台改变该属性不会变化
+    vue.$set(vue.student,'age',10); // 通过该方式是响应式的
+//    参数说明：第一个代表要处理的数组名或者对象名，第二个代表索引或者对象的属性名，第三个代表值
+
+</script>
+</body>
+</html>

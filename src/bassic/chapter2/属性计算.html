@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-focus>
+    <input type="text" v-color="msg">
+    <div>{{msg}}</div>
+    <div>{{reverse}}</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+<!--    自定义指令-->
+    //固定的写法directive
+    Vue.directive('focus',{
+        //固定的写法inserted
+        inserted:function(el){
+            // el指代使用指令的元素
+            el.focus();
+        }
+    });
+    Vue.directive('color',{
+        // bind 和 inserted一样都是钩子函数，只是触发的时机不一样
+        bind:function(el,binding){
+            el.style.backgroundColor = binding.value;
+        }
+    })
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            msg:'orange'
+        },
+        methods:{
+
+        },
+        directives:{
+            // 局部指令，和上面实现的功能是一样的，但是是局部刷新
+            color:{
+                bind:function(el,binding){
+                    el.style.backgroundColor = binding.value;
+                }
+            }
+        },
+        // 计算属性，有缓存，提升性能
+        computed:{
+            reverse:function(){
+                return this.msg.split('').reverse().join('');
+            }
+        }
+    })
+</script>
+</body>
+</html>

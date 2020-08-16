@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        th,td{
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            border: 1px solid;
+        }
+        th{
+            background: orange;
+        }
+        table{
+            border-collapse: collapse;
+        }
+        #mytable{
+            width: 600px;
+            margin: auto;
+        }
+        #myForm{
+            width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="myForm">
+        <form action="">
+            编号：<input type="text" name="id" v-model="id" :disabled="flag">
+            书名：<input type="text" name="name" v-model="name">
+            <button @click.prevent="handle" :disabled="submitFlag">提交</button>
+        </form>
+    </div>
+    <div>
+        <table id="mytable">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>书名</th>
+                    <th>日期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr :key="book.id" v-for="book in books">
+                    <td>{{book.id}}</td>
+                    <td>{{book.name}}</td>
+                    <td>{{book.date}}</td>
+                    <td>
+                        <a href="" @click.prevent="revise(book.id)">修改</a>
+                        <span> | </span>
+                        <a href="" @click.prevent="delet(book.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <span>图书总数：</span><span>{{total}}</span>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            id:'',
+            name:'',
+            flag:false,
+            submitFlag:false,
+            books:[]
+        },
+        methods:{
+            handle:function(){
+                if (this.flag){
+                    // 修改操作,vue的遍历数组的方式some
+                    this.books.some((item) => {
+                        // 这里面使用到了this,对于普通的方法this指代的触发方法的对象，而不是vue对象的this
+                        // 因此上面我们要用箭头函数，this指代的便是父级函数,注意箭头函数只有ES6可用
+                        if (this.id == item.id){
+                            item.name = this.name;
+                        //    如果找到了就没有必要再遍历下去了，这里需要返回true结束遍历
+                            return true;
+                        }
+                    });
+                    // 表单的ID又可以操作了
+                    this.flag = false;
+                } else{
+                    // 添加操作
+                    var book = {};
+                    book.id = this.id;
+                    book.name = this.name;
+                    book.date = '';
+                    this.books.push(book);
+                }
+                this.id = '';
+                this.name = '';
+            },
+            revise:function(bookId){
+            //   console.log(bookId);
+            //    通过filter过滤出想要修改的数据
+                this.flag = true; // 禁止修改ID
+                var book = this.books.filter(function (item) {
+                    return item.id == bookId;
+                });
+            //   console.log(book)
+            //    完成表单填充
+                this.id = book[0].id;
+                this.name = book[0].name;
+            },
+            delet:function(bookId){
+            //    删除功能
+            //    1.根据id找到数据的索引
+            //     var index = this.books.findIndex(function (item) {
+            //         return item.id = bookId;
+            //     })
+            // //    2.删除数组中的数据,第一个参数是要删除元素的数组索引，第二个是删除的个数
+            //     this.books.splice(index,1);
+            //    ==========================================================
+            //    方式二：利用filter
+                this.books = this.books.filter(function(item){
+                    return item.id != bookId;
+                })
+            }
+        },
+        //  计算属性
+        computed: {
+            total:function() {
+                return this.books.length;
+            }
+        },
+        // 监听器，避免名字相同
+        watch:{
+            // 当name的值发生变化时会触发
+            name:function(val){
+                var isExist = this.books.some(function(item){
+                    return item.name == val;
+                });
+                if (isExist){
+                    //存在
+                    this.submitFlag = true;
+                } else{
+                //    不存在
+                    this.submitFlag = false;
+                }
+            }
+        },
+        mounted:function(){
+            //    钩子函数，当页面模板加载完之后触发，初始化调用后台接口一般这这里操作
+            //    模拟初始化从后台返回的数据
+            var data = [
+                {
+                    id:1,
+                    name:'java',
+                    date:2525709975000
+                },
+                {
+                    id:2,
+                    name:'python',
+                    date:2525709975000
+                },
+                {
+                    id:3,
+                    name:'c++',
+                    date:2525709975000
+                }
+            ];
+            this.books = data;
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>学习列表</div>
+    <div>
+        <ul>
+<!--            key帮助vue区分不同的元素，提高性能-->
+            <li :key="index" v-for="(item,index) in mystudy">{{index + '---' + item}}</li>
+        </ul>
+    </div>
+<!--    遍历对象,可以使用if控制输出-->
+    <div>
+        <ul>
+            <li v-if="k=='age'" v-for="(v,k,i) in user">{{v + '---' + k + '---' + i}}</li>
+        </ul>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            mystudy:['java','python','vue'],
+            user:{
+                name:'chen',
+                age:18,
+                sex:'man'
+            }
+        },
+        methods:{
+
+        }
+    })
+</script>
+</body>
+</html>

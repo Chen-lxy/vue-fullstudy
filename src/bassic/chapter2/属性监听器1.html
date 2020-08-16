@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        firstName: <input type="text" v-model="firstName">
+    </div>
+    <div>
+        lastName: <input type="text" v-model="lastName">
+    </div>
+    <div>
+        fullName: {{fullName}}
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            firstName:'jams',
+            lastName:'tina',
+            fullName:'jams tina'
+        },
+        methods:{
+
+        },
+        // 监听器，对属性实行监听
+        watch:{
+            firstName:function(val){
+                this.fullName = val + " " + this.lastName;
+            },
+            lastName:function(val){
+                this.fullName = this.firstName + " " + val;
+            }
+        }
+    })
+</script>
+</body>
+</html>

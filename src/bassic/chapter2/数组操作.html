@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+<!--    数组的操作-->
+    <div>
+        <input type="text" v-model="fname">
+        <button @click="add">添加</button>
+        <button @click="del">删除</button>
+        <button @click="change">替换</button>
+    </div>
+    <div>
+        <li v-for="fruit in fruits">{{fruit}}</li>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            fname:'',
+            fruits:['orange','apple','banana']
+        },
+        methods:{
+            add:function(){
+                this.fruits.push(this.fname)
+            },
+            del:function(){
+                this.fruits.pop();
+            },
+            change:function(){
+                this.fruits = this.fruits.slice(0,1);
+            }
+        }
+    })
+</script>
+</body>
+</html>
