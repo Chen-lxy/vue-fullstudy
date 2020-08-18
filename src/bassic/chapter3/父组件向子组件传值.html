@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>{{fmsg}}</div>
+    <my-component></my-component>
+    <my-component title="来自父组件的值"></my-component>
+    <my-component :title="ftitle"></my-component>
+    <my-component :title="ftitle" content="静态数据"></my-component>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+<!--    注意：在props里面使用驼峰命名，在html节点里面要使用短横线的方式连接-->
+    Vue.component('my-component',{
+        props:['title','content'],
+        // data必须时一个函数
+        data: function(){
+            return {
+                msg:'这是子组件'
+            }
+        },
+        template:'<div>{{msg + "---" + title + "---" + content}}</div>'
+    });
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            fmsg:'这是父组件内容',
+            ftitle:'来自父组件的动态绑定'
+        }
+    })
+</script>
+</body>
+</html>

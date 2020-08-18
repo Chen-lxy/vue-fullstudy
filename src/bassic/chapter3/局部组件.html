@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <hello-world></hello-world>
+    <hello-tom></hello-tom>
+    <hello-anna></hello-anna>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var helloWorld = {
+        data:function(){
+            return {
+                msg:'helloworl'
+            }
+        },
+        template: '<div>{{msg}}</div>'
+    };
+    var helloTom = {
+        data:function(){
+            return {
+                msg:'helloTom'
+            }
+        },
+        template: '<div>{{msg}}</div>'
+    };
+    var helloAnna = {
+        data:function(){
+            return {
+                msg:'helloAnna'
+            }
+        },
+        template: '<div>{{msg}}</div>'
+    };
+    // 局部组件只能在注册他的父组件中使用
+    var vue = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+                'hello-world':helloWorld,
+                'hello-tom':helloTom,
+                'hello-anna':helloAnna
+            }
+        })
+</script>
+</body>
+</html>
