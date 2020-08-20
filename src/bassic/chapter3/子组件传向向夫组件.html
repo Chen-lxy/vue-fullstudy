@@ -13,6 +13,7 @@
 <script>
     Vue.component('my-fruits',{
         props:['fruits'],
+        // $emit固定的写法
         template:`<div>
                         <li :key="index" v-for="(item,index) in fruits">{{item}}</li>
                         <button @click="$emit('enlarge-font')">扩大父组件中字体的大小</button>

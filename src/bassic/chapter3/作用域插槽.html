@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .concurrent{
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <my-slot :fruits="fruits">
+<!--        通过slot-scope可以和slot中的item（infor）绑定-->
+        <template slot-scope="slotProps">
+            <strong v-if="slotProps.infor.id == 2" class="concurrent">{{slotProps.infor.name}}</strong>
+            <span v-else>{{slotProps.infor.name}}</span>
+        </template>
+    </my-slot>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('my-slot',{
+        props:['fruits'],
+        template:`<div>
+                       <li :key='item.id' v-for="item in fruits">
+                            <slot :infor="item">{{item.name}}</slot>
+                       </li>
+                  </div>`
+    });
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            fruits:[{
+                id:1,
+                name:'apple'
+            },{
+                id:2,
+                name:'orange'
+            },{
+                id:3,
+                name:'banana'
+            }]
+        }
+    });
+</script>
+</body>
+</html>

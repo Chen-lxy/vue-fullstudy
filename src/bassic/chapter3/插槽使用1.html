@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<divv id="app">
+<!--    直接传递-->
+    <alert-error>有bug</alert-error>
+</divv>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('alert-error',{
+        data: function(){
+            return {
+                count:0
+            }
+        },
+        template:`<div>
+                       <span>Error:</span>
+                       <slot></slot>
+                  </div>`
+    })
+    var vue = new Vue({
+        el:'#app',
+        data:{
+
+        },
+        methods:{
+
+        }
+    })
+</script>
+</body>
+</html>

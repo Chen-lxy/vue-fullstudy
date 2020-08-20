@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div :style="{fontSize:fontSize + 'px'}">{{msg}}</div>
+    <child-component :fruits="fruits" @enlarge-font="handle($event)"></child-component>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('child-component',{
+        props:['fruits'],
+        template:`<div>
+                        <ul>
+                            <li :key="index" v-for="(item,index) in fruits">{{item}}</li>
+                        </ul>
+                        <button @click="$emit('enlarge-font',10)">扩大父组件中的字体大小</button>
+                  </div>`
+    });
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            msg:'这是父组件中的数据',
+            fruits:['apple','orange','banana'],
+            fontSize:5
+        },
+        methods:{
+            handel:function(val){
+                this.fontSize += 10;
+            }
+        }
+    })
+</script>
+</body>
+</html>
