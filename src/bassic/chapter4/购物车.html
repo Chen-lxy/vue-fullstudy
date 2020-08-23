@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .item .image{
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin: 10px;
+        }
+        .item .name{
+            float: left;
+            height: 60px;
+            width: 60px;
+            line-height: 60px;
+            margin: 10px;
+        }
+        .item .change{
+            float: left;
+            height: 60px;
+            line-height: 60px;
+            margin: 10px;
+        }
+        .item .del{
+            float: left;
+            height: 60px;
+            line-height: 60px;
+            margin: 10px;
+            font-size: 20px;
+            color: red;
+        }
+        .fix::after{
+            content: "";
+            clear: both;
+            display: block;
+        }
+        .item .change input{
+            width: 30px;
+        }
+        a{
+            text-decoration: none;
+            background: lightgray;
+            font-size: 20px;
+        }
+        .title{
+            text-align: center;
+            background: #008c8c;
+            color: white;
+            height: 50px;
+            line-height: 50px;
+        }
+        .footer{
+            text-align: right;
+            background: #008c8c;
+            color: white;
+            height: 40px;
+            line-height: 40px;
+        }
+        .container{
+            width: 300px;
+            margin: auto;
+        }
+        .car-item{
+            background: aliceblue;
+        }
+        .car-item .item{
+            border-bottom: 1px dotted black;
+        }
+        button{
+            /*自定义边框*/
+            border: 0px;
+            /*消除默认点击蓝色边框效果*/
+            outline: none;
+            background: #008c8c;
+            color: white;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <my-car></my-car>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var carTitle = {
+        props:['uname'],
+        template:`
+            <div class="title">{{uname}}的购物车</div>
+        `
+    };
+    var carList = {
+        props:['list'],
+        template:`
+            <div class="car-item">
+                <div class="item fix" :key="item.id" v-for="item in list">
+                    <img :src="item.img" class="image">
+                    <div class="name">{{item.name}}</div>
+                    <div class="change">
+                        <a href="" @click.prevent="sub(item.id)">-</a>
+                        <input type="text" class="num" :value="item.num" @blur="changeNum(item.id,$event)">
+                        <a href="" @click.prevent="add(item.id)">+</a>
+                    </div>
+                    <div class="del" @click="del(item.id)">X</div>
+                </div>
+            </div>
+        `,
+        methods: {
+            del:function(id){
+                console.log(id);
+            //    把要删除的ID传递给父组件
+                this.$emit('car-del',id);
+            },
+            changeNum:function(id,event){
+            //    将ID传给父组件，通过父组件改变num；通过事件对象event获取对象中的值
+            //     console.log(id + "----" + event.target.value);
+                this.$emit('change-num',{
+                    id:id,
+                    type:'change',
+                    num:event.target.value
+                })
+            },
+            sub:function(id){
+                this.$emit('change-num',{
+                    id:id,
+                    type:'sub'
+                })
+            },
+            add:function(id){
+                this.$emit('change-num',{
+                    id:id,
+                    type:'add'
+                })
+            }
+        }
+    };
+    var carTotal = {
+        props:['list'],
+        template:`
+            <div class="total">
+                <span>总价：￥{{total}}</span>
+                <button>结算</button>
+            </div>
+        `,
+        computed:{
+            total:function(){
+            //    计算商品的总价
+                var t = 0;
+                this.list.forEach(item => {
+                    t += item.price * item.num;
+                });
+                return t;
+            }
+        }
+    };
+    Vue.component('my-car',{
+        data:function(){
+            return {
+                uname:'zhangsan',
+                list:[
+                    {
+                        id:1,
+                        name:'小米10',
+                        price:1999,
+                        num:1,
+                        img:'./img/xiaomi.png'
+                    },{
+                        id:2,
+                        name:'apple',
+                        price:1000,
+                        num:2,
+                        img:'./img/apple.png'
+                    },{
+                        id:3,
+                        name:'HuaWei',
+                        price:2999,
+                        num:3,
+                        img:'./img/huawei.png'
+                    }
+                ]
+            }
+        },
+        template:`
+            <div class="car">
+                <car-Title :uname="uname" @change-num="changeNum($event)" class="title"></car-Title>
+                <car-List :list="list" @car-del="carDel($event)" @change-num="changeNum($event)"></car-List>
+                <car-Total :list="list" @change-num="changeNum($event)" class="footer"></car-Total>
+            </div>
+        `,
+        components: {
+            'car-Title':carTitle,
+            'car-List':carList,
+            'car-Total':carTotal
+        },
+        methods:{
+            carDel:function(id){
+                // 删除对应的数据
+            //    1. 找到id对应的数据的索引
+                var index = this.list.findIndex(item => {
+                    return item.id == id;
+                });
+            //    2. 根据索引删除对应的数据
+                this.list.splice(index,1);
+            },
+            changeNum:function(val){
+                if(val.type == 'change'){
+                    //    根据子组件传递过来的数据更新list中的数据
+                    this.list.find(item => {
+                        if (item.id == val.id){
+                            item.num = val.num;
+                            // 终止遍历，这里使用true
+                            return true;
+                        }
+                    });
+                }else if (val.type == 'add'){
+                    this.list.find(item => {
+                        if (item.id == val.id){
+                            item.num += 1;
+                            // 终止遍历，这里使用true
+                            return true;
+                        }
+                    });
+                } else if (val.type == 'sub'){
+                    this.list.find(item => {
+                        if (item.id == val.id){
+                            item.num -= 1;
+                            // 终止遍历，这里使用true
+                            return true;
+                        }
+                    });
+                }
+            }
+        }
+    });
+    var vue = new Vue({
+        el:'#app',
+        data:{
+
+        },
+        methods:{
+
+        }
+    });
+</script>
+</body>
+</html>
