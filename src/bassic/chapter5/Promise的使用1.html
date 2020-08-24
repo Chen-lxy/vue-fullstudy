@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function fo(){
+        return new Promise(function(resolve, reject){
+            setTimeout(function(data){
+                // resolve(123);
+                reject('error')
+            },100);
+        });
+    };
+    fo()
+    .then(function(data){
+    //    正常情况，接收resolve的信息
+        console.log(data);
+    })
+    .catch(function(data){
+    //    异常情况，接收reject得到信息
+        console.log(data);
+    })
+    .finally(function(){
+    //    最终都会执行的
+        console.log("finished>>>>>>>>>>>>>")
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function queryData(url){
+        return new Promise(function(resolve,reject){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState != 4) return;
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    //    处理正常的情况
+                    resolve(xhr.responseType);
+                } else{
+                    //    处理异常的情况
+                    reject('服务器错误！');
+                }
+            };
+            xhr.open('get',url);
+            xhr.send(null);
+        });
+    };
+//    promise处理并发请求
+    var p1 = queryData('http://localhost:3000/data1');
+    var p2 = queryData('http://localhost:3000/data2');
+    var p3 = queryData('http://localhost:3000/data3');
+    Promise.all([p1,p2,p3]).then(function(data){
+    //    这里是p1 p2 p3都请求成功才会触发的事件
+        console.log(data);
+    });
+    Promise.all([p1,p2,p3]).race(function(data){
+        //    这里是返回最快响应的结果
+        console.log(data);
+    });
+</script>
+</body>
+</html>
