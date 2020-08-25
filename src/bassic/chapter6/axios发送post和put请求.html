@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+<script>
+<!--    post和put发送请求的方式一样,如下两种-->
+<!--    这种方式向后台传递的是json格式的参数-->
+    axios.post('http://localhost:3000/data1',{
+        id:123,
+        name:'zhangsan'
+    }).then(function (data) {
+        console.log(data.data);
+    });
+    // 方式二：通过URLSearchParams传参
+    var params = new URLSearchParams();
+    params.append('uname','zhangsan');
+    params.append('pwd','123');
+    axios.post('http://localhost:3000/data1',params).then(function(data){
+        console.log(data.data);
+    });
+</script>
+</body>
+</html>

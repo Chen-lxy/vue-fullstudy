@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+<script>
+<!--    axios发送get和delete请求，两者都是一样-->
+    axios.get('http://localhost:3000/data1?name=zhangsan').then(function (data) {
+        // 这里方法的参数data不是我们所需要的返回数据，这里只通过。data得到数据
+        console.log(data.data);
+    });
+    // restful风格传参
+    axios.get('http://localhost:3000/data1/123').then(function (data) {
+        // 这里方法的参数data不是我们所需要的返回数据，这里只通过。data得到数据
+        console.log(data.data);
+    });
+    //    使用params传参
+    axios.get('http://localhost:3000/data1',{
+        params:{
+            id:123,
+            name:'zhangsan'
+        }
+    }).then(function (data) {
+        // 这里方法的参数data不是我们所需要的返回数据，这里只通过。data得到数据
+        console.log(data.data);
+    });
+
+</script>
+</body>
+</html>

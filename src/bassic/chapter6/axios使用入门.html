@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+<script>
+    axios.get('http://localhost:3000/data1').then(function (data) {
+        // 这里方法的参数data不是我们所需要的返回数据，这里只通过。data得到数据
+        console.log(data.data);
+    })
+</script>
+</body>
+</html>

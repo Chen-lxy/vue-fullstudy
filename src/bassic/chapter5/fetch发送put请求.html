@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+<!--    fetch发送put请求-->
+    fetch('http://localhost:3000/data1/123',{
+        method:'put',
+        body:JSON.stringify({
+            name:'anna',
+            age:18
+        }),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    }).then(function(data){
+        return data.text();
+    }).then(function(data){
+        console.log(data);
+    });
+</script>
+</body>
+</html>

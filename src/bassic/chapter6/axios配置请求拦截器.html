@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+<script>
+<!--    axios配置请求拦截器-->
+    axios.interceptors.request.use(function(config){
+        console.log(config.url);
+        // 这里可以获取到url之后做一些处理，比如是否加token，是否加权限
+        config.headers.mytoken = 'hello';
+        // 这里处理完config一定要返回出去
+        return config;
+    },function(err){
+    //    处理错误的情况
+        console.log(err);
+    });
+    // 通过拦截器处理之后，请求头上会有mytoken
+    axios.get('http://localhost:3000/data1').then(function(data){
+        console.log(data.data);
+    });
+</script>
+</body>
+</html>

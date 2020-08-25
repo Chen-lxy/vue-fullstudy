@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+<script>
+    axios.intercepers.respose.use(function(resp){
+        // 通过拦截器处理之后得到的就是我们实际需要的数据
+        return resp.data;
+    },function(err){
+        console.log(err);
+    });
+    axios.get('http://localhost:3000/data1').then(function (data) {
+        // 这样处理之后data就是我们之际需要的数据
+        console.log(data);
+    })
+</script>
+</body>
+</html>
